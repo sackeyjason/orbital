@@ -1,0 +1,113 @@
+:root {
+  background: #111;
+  color: #fff;
+  font-family: System, sans-serif;
+}
+
+body {
+  text-align: center;
+  margin: 0;
+  height: 100vh;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+/* canvas */
+#view {
+  width: 100%;
+  order: 1;
+  max-height: calc(100vh - 50px);
+  object-fit: contain;
+}
+
+[class^='controls-'] {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: stretch;
+  align-content: flex-start;
+  height: 50%;
+  align-self: flex-end;
+  user-select: none;
+}
+
+.controls-l {
+  flex-grow: 1;
+}
+.controls-r {
+  flex-grow: 1;
+  order: 2;
+  flex-direction: row-reverse;
+}
+
+[class^='controls-'] button {
+  border: none;
+  background: #333;
+  color: #fff;
+  font-size: calc(4vw + 10px);
+  margin: 1px;
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+@media (orientation: portrait) {
+  .page {
+    align-content: flex-start;
+    flex-wrap: wrap;
+  }
+  #view {
+    order: 0;
+    width: calc(100% - 10px);
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+  [class^='controls'] {
+    flex-basis: 50%;
+    align-self: stretch;
+    height: auto;
+  }
+}
+
+@media (max-width: 800px) {
+  #view {
+    flex-grow: 2;
+  }
+}
+
+@media (min-width: 800px) and (min-height: 800px) {
+  [class^='controls-'] {
+    display: none;
+  }
+}
+
+.main-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 0px;
+  width: 90%;
+  height: 90%;
+  background-color: rgba(0, 0, 0, 0.8);
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+nav {
+  margin-top: 4rem;
+}
+
+.lastScore {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}
