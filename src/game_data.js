@@ -1,19 +1,19 @@
 const seeds = [
   {
-    name: "swamp",
-    colour: "#7d8c3a",
+    name: 'swamp',
+    colour: '#7d8c3a',
   },
   {
-    name: "castle",
-    colour: "#5742b7"
-  }
+    name: 'castle',
+    colour: '#5742b7',
+  },
 ];
 
 const pieces = {
   i: {
     shape: [[1, 1, 1, 1]],
     centre: [1.5, 0.5],
-    colour: "#7FDBFF",
+    colour: '#7FDBFF',
   },
   t: {
     shape: [
@@ -21,7 +21,7 @@ const pieces = {
       [1, 1, 1],
     ],
     centre: [1, 1],
-    colour: "#5742b7",
+    colour: '#5742b7',
   },
   z: {
     shape: [
@@ -29,7 +29,7 @@ const pieces = {
       [0, 1, 1],
     ],
     centre: [1, 1],
-    colour: "#FF4136"
+    colour: '#FF4136',
   },
   s: {
     shape: [
@@ -37,7 +37,7 @@ const pieces = {
       [1, 1],
     ],
     centre: [1, 1],
-    colour: "#2ECC40"
+    colour: '#2ECC40',
   },
   o: {
     shape: [
@@ -45,7 +45,7 @@ const pieces = {
       [1, 1],
     ],
     centre: [0.5, 0.5],
-    colour: "#FFDC00"
+    colour: '#FFDC00',
   },
   l: {
     shape: [
@@ -53,7 +53,7 @@ const pieces = {
       [1, 1, 1],
     ],
     centre: [1, 1],
-    colour: "#0074D9"
+    colour: '#0074D9',
   },
   j: {
     shape: [
@@ -61,7 +61,7 @@ const pieces = {
       [1, 1, 1],
     ],
     centre: [1, 1],
-    colour: "#FF851B"
+    colour: '#FF851B',
   },
 };
 
@@ -69,7 +69,7 @@ const pieces = {
 // "Super Rotation System"
 
 const I_WALLKICK_DATA = {
-  "01": [
+  '01': [
     [0, 0],
     [-2, 0],
     [1, 0],
@@ -118,7 +118,7 @@ const I_WALLKICK_DATA = {
     [1, -2],
     [-2, 1],
   ],
-  "03": [
+  '03': [
     [0, 0],
     [-1, 0],
     [2, 0],
@@ -128,7 +128,7 @@ const I_WALLKICK_DATA = {
 };
 
 const OTHER_WALLKICK_DATA = {
-  "01": [
+  '01': [
     [0, 0],
     [-1, 0],
     [-1, 1],
@@ -177,7 +177,7 @@ const OTHER_WALLKICK_DATA = {
     [0, 2],
     [-1, 2],
   ],
-  "03": [
+  '03': [
     [0, 0],
     [1, 0],
     [1, 1],

@@ -1,3 +1,4 @@
+// TODO replace with FY/other
 function shuff(list) {
   const d = list.reduce((acc, p) => {
     if (Math.random() < 0.5) {
@@ -9,4 +10,4 @@ function shuff(list) {
   }, []);
   return d;
 }
-export default list => shuff(shuff(shuff(shuff(shuff(list)))));
+export default (list) => shuff(shuff(shuff(shuff(shuff(list)))));

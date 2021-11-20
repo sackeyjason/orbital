@@ -1,12 +1,12 @@
-import { timestamp } from "./util";
+import { timestamp } from './util';
 
 function Plant(seed, data) {
-  console.log("seed: ", seed);
+  console.log('seed: ', seed);
   const wrapX = data.wrapX;
   var plantedAt = timestamp();
   var age = 0;
   // var { grid } = data;
-  var b = { ...seed, type: "plant", shape: null };
+  var b = { ...seed, type: 'plant', shape: null };
   var leaves = [];
   var growth = 0;
   var gps = 4;
@@ -18,7 +18,7 @@ function Plant(seed, data) {
   this.grow = (delta, grid) => {
     age += delta;
     switch (seed.name) {
-      case "swamp":
+      case 'swamp':
         if (age / (1000 / gps) > growth) {
           leaves.forEach((leaf) => {
             if (grid[leaf.y + 1] && !grid[leaf.y + 1][leaf.x]) {

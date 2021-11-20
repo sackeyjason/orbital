@@ -3,7 +3,7 @@ import {
   pieces,
   seeds,
   OTHER_WALLKICK_DATA,
-  I_WALLKICK_DATA
+  I_WALLKICK_DATA,
 } from './game_data';
 import shuffle from './shuffle';
 // var Color = require('color');
@@ -14,7 +14,7 @@ const DEFAULT_OPTIONS = {
   gridWidth: 32,
   gridHeight: 20,
   voidRadius: 16,
-  crustThickness: 16
+  crustThickness: 16,
 };
 
 const queue = [];
@@ -90,7 +90,7 @@ export function spawn() {
       falling: 0,
       fallNext: 1,
       shape: [[1]],
-      centre: [0, 0]
+      centre: [0, 0],
     };
   } else {
     const piece = {
@@ -101,26 +101,30 @@ export function spawn() {
       falling: 0,
       fallNext: 1,
       shape: pieces[next].shape,
-      centre: pieces[next].centre
+      centre: pieces[next].centre,
     };
     return piece;
   }
 }
 
+// TEST_SEED = false;
+const TEST_SEED = 'castle';
+
+function replenishQueue() {
+  let pieceTypes = Object.keys(pieces);
+  pieceTypes.push({ type: 'seed', ...seeds[0] });
+  shuffle(pieceTypes);
+  console.log(pieceTypes);
+  queue.push(...pieceTypes);
+}
+
 export function getNext() {
-  if (queue.length === 0) {
-    // Replenish queue
-    let pieceTypes = Object.keys(pieces);
-    pieceTypes.push({ type: 'seed', ...seeds[0] });
-    shuffle(pieceTypes);
-    console.log(pieceTypes);
-    queue.push(...pieceTypes);
-  }
+  if (queue.length === 0) replenishQueue();
   return queue[0];
 }
 
 export function removeLines(lines, grid) {
-  lines.reverse().forEach(y => {
+  lines.reverse().forEach((y) => {
     grid.splice(y, 1);
   });
   for (let i = 0; i < lines.length; i++) {
@@ -147,7 +151,7 @@ export function start() {
   this.lines = 0;
   this.level = 1;
 
-  this.addScore = points => {
+  this.addScore = (points) => {
     this.score += points;
   };
 
@@ -175,7 +179,7 @@ function tryRotate(piece, grid) {
     let shiftedPiece = {
       ...piece,
       x: wrapX(piece.x - d[0]), // mirror x axis
-      y: piece.y - d[1]
+      y: piece.y - d[1],
     };
     if (!doesCollide(shiftedPiece, grid)) {
       return shiftedPiece;
@@ -183,7 +187,7 @@ function tryRotate(piece, grid) {
   }
 }
 
-Object.keys(pieces).forEach(pKey => {
+Object.keys(pieces).forEach((pKey) => {
   var p = pieces[pKey];
   // var colour = Color(p.colour);
   // p.dimmed = colour.desaturate(0.75).string();
