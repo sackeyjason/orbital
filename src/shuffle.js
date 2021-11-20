@@ -1,13 +1,15 @@
-// TODO replace with FY/other
-function shuff(list) {
-  const d = list.reduce((acc, p) => {
-    if (Math.random() < 0.5) {
-      acc.push(p);
-    } else {
-      acc.unshift(p);
-    }
-    return acc;
-  }, []);
-  return d;
-}
-export default (list) => shuff(shuff(shuff(shuff(shuff(list)))));
+const shuffle = (arr, options) => {
+  const len = arr.length;
+  const { rand, mutate } = {
+    rand: (min, max) => Math.floor(Math.random() * (max - min) + min),
+    mutate: true,
+    ...options,
+  };
+  const list = mutate ? arr : [...arr];
+  for (let i = 0; i < len; ++i) {
+    const j = rand(i, len);
+    [list[i], list[j]] = [list[j], list[i]];
+  }
+  return list;
+};
+export default shuffle;

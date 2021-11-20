@@ -112,6 +112,15 @@ const TEST_SEED = 'castle';
 
 function replenishQueue() {
   let pieceTypes = Object.keys(pieces);
+
+  if (TEST_SEED) {
+    const thatSeed = seeds.find((seed) => seed.name === TEST_SEED);
+    if (!thatSeed) throw 'No seed ' + TEST_SEED;
+    for (let i = 0; i < 7; ++i) {
+      pieceTypes.push({ type: 'seed', ...thatSeed });
+    }
+  }
+
   pieceTypes.push({ type: 'seed', ...seeds[0] });
   shuffle(pieceTypes);
   console.log(pieceTypes);
