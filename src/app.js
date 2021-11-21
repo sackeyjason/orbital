@@ -16,7 +16,7 @@ import {
 } from './game';
 import { getCircleToGrid, getAngle } from './geometry';
 // import h from "hyperscript";
-import { Plant } from './plant';
+import { Plant, explode } from './plant';
 import { timestamp } from './util';
 
 const SCREEN_WIDTH = 640;
@@ -45,6 +45,7 @@ let piece = null;
 let mainMenu = true;
 let round = null;
 let plant = null;
+let bombs = [];
 
 const wrapX = getWrapX(GRID_WIDTH);
 
@@ -189,11 +190,9 @@ let shock = 0;
 let shockDecay = 0.1;
 
 function processEvent(event) {
+  const { eventType, data } = event;
   // console.log(event);
-
-  if (event === 'go nuts') {
-    shock = 50;
-  } else if (event[0] === 'input') {
+  if (event[0] === 'input') {
     if (event[1] === 'enter') {
       if (mainMenu) {
         newGame();
@@ -237,6 +236,9 @@ function processEvent(event) {
       }
     }
   } else if (event[0] === 'clear') {
+  } else if (event[0] === 'newBomb') {
+    const data = event[1];
+    bombs.push({ ...data, timer: 0 });
   }
 }
 
@@ -300,6 +302,10 @@ function update(t) {
   } else if (plant) {
     plant.grow(t, grid);
     if (plant.finished) {
+      if ((plant.name = 'bomb')) {
+        const { x, y } = plant;
+        events.push(['newBomb', { x, y }]);
+      }
       plant = null;
     }
   } else {
@@ -325,6 +331,13 @@ function update(t) {
       // check last piece to detect T-spins, room to manoeuvre
       round.addScore(pointsAwarded);
     } else if (!mainMenu) {
+      bombs.forEach((bomb) => {
+        ++bomb.timer;
+        if (bomb.timer > 2) {
+          explode(bomb.x, bomb.y, grid2);
+        }
+        bombs = bombs.filter((bomb) => bomb.timer <= 2);
+      });
       piece = spawn();
       if (doesCollide(piece, grid)) {
         // GAME OVER

@@ -3,10 +3,9 @@ import { timestamp } from './util';
 function Plant(seed, data) {
   console.log('seed: ', seed);
   const wrapX = data.wrapX;
-  var plantedAt = timestamp();
   var age = 0;
   // var { grid } = data;
-  var b = { ...seed, type: 'plant', shape: null };
+  var vegetation = { ...seed, type: 'plant', shape: null };
   var leaves = [];
   var growth = 0;
   var gps = 4;
@@ -29,8 +28,9 @@ function Plant(seed, data) {
     age += delta;
     switch (seed.name) {
       case 'bomb': {
-        const leaf = leaves[0];
-        if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+        if (grid[seed.y]) grid[seed.y][seed.x] = { ...vegetation };
+        this.x = seed.x;
+        this.y = seed.y;
         this.finished = true;
         break;
       }
@@ -45,7 +45,7 @@ function Plant(seed, data) {
               leaf.angle = 1;
               leaves.push({ ...leaf, angle: 3 });
             }
-            if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+            if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...vegetation };
           } else {
             leaves.forEach((leaf) => {
               var mLeaf = moveLeaf(leaf);
@@ -54,7 +54,7 @@ function Plant(seed, data) {
               } else {
                 leaf.x = mLeaf.x;
                 leaf.y = mLeaf.y;
-                if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+                if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...vegetation };
                 leaf.angle = (leaf.angle + 1) % 4;
                 leaves.push({ ...leaf, angle: (leaf.angle + 2) % 4 });
               }
@@ -75,7 +75,7 @@ function Plant(seed, data) {
             const leaf = leaves[0];
             leaf.angle = 1;
             leaves.push({ ...leaf, angle: 3 });
-            if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+            if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...vegetation };
           } else {
             leaves.forEach((leaf) => {
               if (grid[leaf.y + 1] && !grid[leaf.y + 1][leaf.x]) {
@@ -88,7 +88,7 @@ function Plant(seed, data) {
               } else {
                 leaf.x = mLeaf.x;
                 leaf.y = mLeaf.y;
-                if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+                if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...vegetation };
               }
             });
           }
@@ -106,4 +106,11 @@ function Plant(seed, data) {
   };
 }
 
-export { Plant };
+// bomb explosion
+const explode = (x, y, grid) => {
+  grid?.[y]?.[x + 1] = 1;
+  grid?.[y]?.[x + 2] = 1;
+  grid?.[y]?.[x + 3] = 1;
+};
+
+export { Plant, explode };
