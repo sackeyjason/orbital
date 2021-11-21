@@ -28,30 +28,39 @@ function Plant(seed, data) {
   this.grow = (delta, grid) => {
     age += delta;
     switch (seed.name) {
+      case 'bomb': {
+        const leaf = leaves[0];
+        if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+        this.finished = true;
+        break;
+      }
       case 'castle': {
         if (age / (1000 / gps) > growth) {
-          leaves.forEach((leaf) => {
-            var mLeaf = moveLeaf(leaf);
-            if (grid[mLeaf.y] && grid[mLeaf.y][mLeaf.x]) {
-              // Collides - no move
-            } else {
-              leaf.x = mLeaf.x;
-              leaf.y = mLeaf.y;
-              if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
-              leaf.angle = (leaf.angle + 1) % 4;
-              leaves.push({ ...leaf, angle: (leaf.angle + 2) % 4 });
-            }
-          });
           if (growth === 0) {
             const leaf = leaves[0];
-            if (grid?.[leaf.y]?.[leaf.x + 1] && grid?.[leaf.y]?.[leaf.x - 1]) {
-              // grow up
-            } else {
-              // grow sideways
+            if (
+              !(grid?.[leaf.y]?.[leaf.x + 1] && grid?.[leaf.y]?.[leaf.x - 1])
+            ) {
+              // grow sideways if possible. Otherwise, default is upward growth
               leaf.angle = 1;
               leaves.push({ ...leaf, angle: 3 });
             }
+            if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+          } else {
+            leaves.forEach((leaf) => {
+              var mLeaf = moveLeaf(leaf);
+              if (grid[mLeaf.y] && grid[mLeaf.y][mLeaf.x]) {
+                // Collides - no move
+              } else {
+                leaf.x = mLeaf.x;
+                leaf.y = mLeaf.y;
+                if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+                leaf.angle = (leaf.angle + 1) % 4;
+                leaves.push({ ...leaf, angle: (leaf.angle + 2) % 4 });
+              }
+            });
           }
+
           growth++;
           if (growth === 5) {
             this.finished = true;
@@ -61,26 +70,27 @@ function Plant(seed, data) {
       }
       case 'swamp':
         if (age / (1000 / gps) > growth) {
-          leaves.forEach((leaf) => {
-            if (grid[leaf.y + 1] && !grid[leaf.y + 1][leaf.x]) {
-              // fall down
-              leaf.angle = 2;
-            }
-            var mLeaf = moveLeaf(leaf);
-            if (grid[mLeaf.y] && grid[mLeaf.y][mLeaf.x]) {
-              // Collides - no move
-            } else {
-              leaf.x = mLeaf.x;
-              leaf.y = mLeaf.y;
-              if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
-            }
-          });
-
           if (growth === 0) {
             // one left, one right
             const leaf = leaves[0];
             leaf.angle = 1;
             leaves.push({ ...leaf, angle: 3 });
+            if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+          } else {
+            leaves.forEach((leaf) => {
+              if (grid[leaf.y + 1] && !grid[leaf.y + 1][leaf.x]) {
+                // fall down
+                leaf.angle = 2;
+              }
+              var mLeaf = moveLeaf(leaf);
+              if (grid[mLeaf.y] && grid[mLeaf.y][mLeaf.x]) {
+                // Collides - no move
+              } else {
+                leaf.x = mLeaf.x;
+                leaf.y = mLeaf.y;
+                if (grid[leaf.y]) grid[leaf.y][leaf.x] = { ...b };
+              }
+            });
           }
 
           growth++;

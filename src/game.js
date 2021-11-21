@@ -107,8 +107,8 @@ export function spawn() {
   }
 }
 
-// TEST_SEED = false;
-const TEST_SEED = 'castle';
+//  TEST_SEED = false;
+const TEST_SEED = 'bomb';
 
 function replenishQueue() {
   let pieceTypes = Object.keys(pieces);

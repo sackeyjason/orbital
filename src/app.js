@@ -12,7 +12,7 @@ import {
   removeLines,
   calculatePoints,
   tryRotate,
-  getColour
+  getColour,
 } from './game';
 import { getCircleToGrid, getAngle } from './geometry';
 // import h from "hyperscript";
@@ -33,7 +33,7 @@ const circle = {
   x: (SCREEN_WIDTH - circleRadius) / 2,
   y: CRUST_THICKNESS,
   bottom: SCREEN_HEIGHT - CRUST_THICKNESS,
-  w: (SCREEN_WIDTH - circleRadius) / 2 + circleRadius
+  w: (SCREEN_WIDTH - circleRadius) / 2 + circleRadius,
 };
 let ctx;
 const events = [];
@@ -54,7 +54,7 @@ const grid = new Array(GRID_HEIGHT).fill(null).map(() => {
 let grid2;
 
 function clearGrid() {
-  grid.forEach(row => {
+  grid.forEach((row) => {
     row.fill(0);
   });
 }
@@ -68,7 +68,7 @@ const getGridCoords = getCircleToGrid({
   GRID_WIDTH,
   GRID_HEIGHT,
   VOID_RADIUS,
-  ACTIVE_RADIUS
+  ACTIVE_RADIUS,
 });
 
 function renderGrid(grid) {
@@ -165,8 +165,8 @@ function getClickHandler() {
 function lockPieceIn() {
   if (piece.type === 'seed') {
     // Check appropriate soil condition
-    // Plant down
-    piece.y = piece.y + 1;
+    // ~~Plant down~~
+    // piece.y = piece.y + 1;
     plant = new Plant(piece, { wrapX });
   } else {
     getPieceGridCoords(piece, grid).forEach(([x, y]) => {
@@ -257,7 +257,7 @@ function update(t) {
 
   shock = Math.max(0, shock - shockDecay * t);
 
-  grid2 = grid.map(line => line.slice());
+  grid2 = grid.map((line) => line.slice());
 
   if (piece) {
     piece.falling += t * fallingSpeed;
@@ -278,7 +278,7 @@ function update(t) {
         rotatedFrom: piece.angle,
         angle: { '-1': 3, 0: 0, 1: 1, 2: 2, 3: 3, 4: 0 }[
           piece.angle + piece.rotation
-        ]
+        ],
       };
       const rotateAttempt = tryRotate(pieceRotated, grid);
       piece = rotateAttempt || piece;
@@ -305,7 +305,7 @@ function update(t) {
   } else {
     const completeLines = [];
     grid2.forEach((line, y) => {
-      if (line.find(block => block === 0) === undefined) {
+      if (line.find((block) => block === 0) === undefined) {
         completeLines.push(y);
         grid[y].fill(3);
       }
@@ -313,12 +313,12 @@ function update(t) {
     if (completeLines.length) {
       clearing = {
         lines: completeLines,
-        at: timestamp()
+        at: timestamp(),
       };
       const level = round.level;
       const pointsAwarded = calculatePoints(completeLines.length, {
         level,
-        lastPiece: null
+        lastPiece: null,
       });
 
       // check level

@@ -7,6 +7,10 @@ const seeds = [
     name: 'castle',
     colour: '#5742b7',
   },
+  {
+    name: 'bomb',
+    colour: '#FF3344',
+  },
 ];
 
 const pieces = {
