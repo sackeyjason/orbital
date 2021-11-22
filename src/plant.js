@@ -107,10 +107,16 @@ function Plant(seed, data) {
 }
 
 // bomb explosion
-const explode = (x, y, grid) => {
-  grid?.[y]?.[x + 1] = 1;
-  grid?.[y]?.[x + 2] = 1;
-  grid?.[y]?.[x + 3] = 1;
+const explode = (x, y, grid, wrapX) => {
+  // 3 2 1 0 1 2 3
+  // 0 1 2 3 4 5 6
+  for (let i = -3; i < 4; ++i) {
+    for (let j = -3; j < 4; ++j) {
+      if (Math.abs(i) !== 3 || Math.abs(j) !== 3) {
+        if (grid[y + i]) grid[y + i][wrapX(x + j)] = { colour: '#E24' };
+      }
+    }
+  }
 };
 
 export { Plant, explode };

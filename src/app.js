@@ -317,6 +317,7 @@ function update(t) {
       }
     });
     if (completeLines.length) {
+      // TODO: clear away bombs
       clearing = {
         lines: completeLines,
         at: timestamp(),
@@ -334,9 +335,10 @@ function update(t) {
       bombs.forEach((bomb) => {
         ++bomb.timer;
         if (bomb.timer > 2) {
-          explode(bomb.x, bomb.y, grid2);
+          explode(bomb.x, bomb.y, grid, wrapX);
         }
         bombs = bombs.filter((bomb) => bomb.timer <= 2);
+        // TODO: check for cleared lines
       });
       piece = spawn();
       if (doesCollide(piece, grid)) {
