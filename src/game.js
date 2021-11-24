@@ -107,8 +107,8 @@ export function spawn() {
   }
 }
 
-const TEST_SEED = false;
-// const TEST_SEED = 'bomb';
+// const TEST_SEED = false;
+const TEST_SEED = 'bomb';
 
 function replenishQueue() {
   let pieceTypes = Object.keys(pieces);
@@ -179,7 +179,7 @@ export function start() {
   };
 }
 
-function tryRotate(piece, grid) {
+export function tryRotate(piece, grid) {
   console.log('piece: ', piece);
   const wrapX = getWrapX(grid[0].length);
   let data = piece.type === 'i' ? I_WALLKICK_DATA : OTHER_WALLKICK_DATA;
@@ -206,7 +206,7 @@ Object.keys(pieces).forEach((pKey) => {
   p.dimmed = '#777';
 });
 
-function getColour(piece, opts = {}) {
+export function getColour(piece, opts = {}) {
   if (piece.colour) return piece.colour;
   const archetype = pieces[piece.type];
   if (archetype) {
@@ -216,4 +216,12 @@ function getColour(piece, opts = {}) {
   }
 }
 
-export { tryRotate, getColour };
+export function getCompleteLines(grid) {
+  const completeLines = [];
+  grid.forEach((line, y) => {
+    if (line.find((block) => block === 0) === undefined) {
+      completeLines.push(y);
+      grid[y].fill(3);
+    }
+  });
+}

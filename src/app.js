@@ -238,6 +238,17 @@ function processEvent(event) {
   } else if (event[0] === 'newBomb') {
     const data = event[1];
     bombs.push({ ...data, timer: 0 });
+  } else if (event[0] === 'explodeBomb') {
+    const { bomb, wrapX } = event[1];
+    explode(bomb.x, bomb.y, grid, wrapX);
+  } else if (event[0] === 'spawnPiece') {
+    piece = spawn();
+    if (doesCollide(piece, grid)) {
+      // GAME OVER
+      // high score?
+      piece = null;
+      showMainMenu('GAME OVER', { lastScore: round.score });
+    }
   }
 }
 
@@ -308,6 +319,7 @@ function update(t) {
       plant = null;
     }
   } else {
+    events.push(['checkCompletes']);
     const completeLines = [];
     grid2.forEach((line, y) => {
       if (line.find((block) => block === 0) === undefined) {
@@ -316,7 +328,6 @@ function update(t) {
       }
     });
     if (completeLines.length) {
-      // TODO: clear away bombs
       clearing = {
         lines: completeLines,
         at: timestamp(),
@@ -334,18 +345,12 @@ function update(t) {
       bombs.forEach((bomb) => {
         ++bomb.timer;
         if (bomb.timer > 2) {
-          explode(bomb.x, bomb.y, grid, wrapX);
+          events.push(['explodeBomb', { bomb, wrapX }]);
+          events.push(['checkCompletes']);
         }
         bombs = bombs.filter((bomb) => bomb.timer <= 2);
-        // TODO: check for cleared lines
       });
-      piece = spawn();
-      if (doesCollide(piece, grid)) {
-        // GAME OVER
-        // high score?
-        piece = null;
-        showMainMenu('GAME OVER', { lastScore: round.score });
-      }
+      events.push(['spawnPiece']);
     }
   }
 }
