@@ -224,4 +224,5 @@ export function getCompleteLines(grid) {
       grid[y].fill(3);
     }
   });
+  return completeLines;
 }

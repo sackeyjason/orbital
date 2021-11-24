@@ -12,6 +12,7 @@ import {
   calculatePoints,
   tryRotate,
   getColour,
+  getCompleteLines,
 } from './game.js';
 import { getCircleToGrid, getAngle } from './geometry.js';
 // import h from "hyperscript";
@@ -241,14 +242,6 @@ function processEvent(event) {
   } else if (event[0] === 'explodeBomb') {
     const { bomb, wrapX } = event[1];
     explode(bomb.x, bomb.y, grid, wrapX);
-  } else if (event[0] === 'spawnPiece') {
-    piece = spawn();
-    if (doesCollide(piece, grid)) {
-      // GAME OVER
-      // high score?
-      piece = null;
-      showMainMenu('GAME OVER', { lastScore: round.score });
-    }
   }
 }
 
@@ -319,14 +312,14 @@ function update(t) {
       plant = null;
     }
   } else {
-    events.push(['checkCompletes']);
-    const completeLines = [];
-    grid2.forEach((line, y) => {
-      if (line.find((block) => block === 0) === undefined) {
-        completeLines.push(y);
-        grid[y].fill(3);
+    bombs.forEach((bomb) => {
+      ++bomb.timer;
+      if (bomb.timer > 2) {
+        events.push(['explodeBomb', { bomb, wrapX }]);
       }
+      bombs = bombs.filter((bomb) => bomb.timer <= 2);
     });
+    const completeLines = getCompleteLines(grid);
     if (completeLines.length) {
       clearing = {
         lines: completeLines,
@@ -342,15 +335,13 @@ function update(t) {
       // check last piece to detect T-spins, room to manoeuvre
       round.addScore(pointsAwarded);
     } else if (!mainMenu) {
-      bombs.forEach((bomb) => {
-        ++bomb.timer;
-        if (bomb.timer > 2) {
-          events.push(['explodeBomb', { bomb, wrapX }]);
-          events.push(['checkCompletes']);
-        }
-        bombs = bombs.filter((bomb) => bomb.timer <= 2);
-      });
-      events.push(['spawnPiece']);
+      piece = spawn();
+      if (doesCollide(piece, grid)) {
+        // GAME OVER
+        // high score?
+        piece = null;
+        showMainMenu('GAME OVER', { lastScore: round.score });
+      }
     }
   }
 }
