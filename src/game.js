@@ -121,7 +121,10 @@ function replenishQueue() {
     }
   }
 
-  pieceTypes.push({ type: 'seed', ...seeds[0] });
+  pieceTypes.push({
+    type: 'seed',
+    ...seeds[Math.floor(Math.random() * seeds.length)],
+  });
   shuffle(pieceTypes);
   console.log(pieceTypes);
   queue.push(...pieceTypes);
