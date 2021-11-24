@@ -1,7 +1,6 @@
 import { updateFps, renderFps } from './fps.js';
-import ModeSelector from './mode_selector';
 // import memoize from "lodash.memoize";
-import input from './input';
+import input from './input.js';
 import {
   start,
   getWrapX,
@@ -13,11 +12,11 @@ import {
   calculatePoints,
   tryRotate,
   getColour,
-} from './game';
-import { getCircleToGrid, getAngle } from './geometry';
+} from './game.js';
+import { getCircleToGrid, getAngle } from './geometry.js';
 // import h from "hyperscript";
-import { Plant, explode } from './plant';
-import { timestamp } from './util';
+import { Plant, explode } from './plant.js';
+import { timestamp } from './util.js';
 
 const SCREEN_WIDTH = 640;
 const SCREEN_HEIGHT = 480;

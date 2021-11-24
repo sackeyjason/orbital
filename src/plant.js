@@ -1,4 +1,4 @@
-import { timestamp } from './util';
+// import { timestamp } from './util.js';
 
 function Plant(seed, data) {
   console.log('seed: ', seed);

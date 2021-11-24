@@ -4,8 +4,8 @@ import {
   seeds,
   OTHER_WALLKICK_DATA,
   I_WALLKICK_DATA,
-} from './game_data';
-import shuffle from './shuffle';
+} from './game_data.js';
+import shuffle from './shuffle.js';
 // var Color = require('color');
 
 const DEFAULT_OPTIONS = {
