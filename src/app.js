@@ -389,7 +389,7 @@ function init() {
   ctx = view.getContext('2d');
   // modeSelector.init();
   input.init(document, events);
-  view.addEventListener('click', getClickHandler());
+  // view.addEventListener('click', getClickHandler());
   document.addEventListener('click', () => events.push(['input', 'enter']));
 
   console.log(getNext());
