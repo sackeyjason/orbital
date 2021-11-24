@@ -81,7 +81,7 @@ body {
   }
 }
 
-@media (min-width: 800px) and (min-height: 800px) {
+@media (min-width: 800px) {
   [class^='controls-'] {
     display: none;
   }
