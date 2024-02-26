@@ -250,7 +250,7 @@ let dotX = 0;
 const speed = 2 / 30 / 32;
 let fps;
 // Gravity
-let fallingSpeed = 0.001;
+let fallingSpeed = 0.0015;
 
 function update(t) {
   while (events.length) {

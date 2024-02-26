@@ -199,11 +199,15 @@ export function tryRotate(piece, grid) {
   }
 }
 
+// generate random digit for a grey colour
+const digit = () => Math.floor(Math.random() * 5 + 5);
+
 Object.keys(pieces).forEach((pKey) => {
   var p = pieces[pKey];
   // var colour = Color(p.colour);
   // p.dimmed = colour.desaturate(0.75).string();
-  p.dimmed = '#777';
+  const a = digit();
+  p.dimmed = '#' + [a, a, a].join('');
 });
 
 export function getColour(piece, opts = {}) {
