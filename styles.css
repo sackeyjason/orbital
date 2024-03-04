@@ -14,38 +14,22 @@ body {
   display: flex;
   justify-content: center;
   height: 100vh;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   align-items: center;
 }
 
 /* canvas */
 #view {
   width: 100%;
-  order: 1;
   max-height: calc(100vh - 50px);
   object-fit: contain;
 }
 
-[class^='controls-'] {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: stretch;
-  align-content: flex-start;
-  height: 50%;
-  align-self: flex-end;
-  user-select: none;
+.controls {
+  display: none;
 }
 
-.controls-l {
-  flex-grow: 1;
-}
-.controls-r {
-  flex-grow: 1;
-  order: 2;
-  flex-direction: row-reverse;
-}
-
-[class^='controls-'] button {
+.controls button {
   border: none;
   background: #333;
   color: #fff;
@@ -55,6 +39,7 @@ body {
   flex-shrink: 0;
   padding-top: 5%;
   padding-bottom: 5%;
+  width: 100%;
 }
 
 @media (orientation: portrait) {
@@ -75,14 +60,8 @@ body {
   }
 }
 
-@media (max-width: 800px) {
-  #view {
-    flex-grow: 2;
-  }
-}
-
-@media (min-width: 800px) {
-  [class^='controls-'] {
+@media (min-width: 500px) {
+  .controls {
     display: none;
   }
 }

@@ -348,13 +348,13 @@ function update(t) {
 
 function showMainMenu(message, etc) {
   mainMenu = true;
-  const html = `<div class="main-menu">
+  const html_ = `<div class="main-menu">
     <div><h1>Orbital</h1></div>
     <nav><div>Hit Enter/Tap to start</div></nav>
     ${etc && `<div class="lastScore">${etc.lastScore}</div>`}
   </div>`;
   const container = document.createElement('div');
-  container.innerHTML = html;
+  container.innerHTML = html_;
   const menuScreen = container.children[0];
   // const menuScreen = h("div.main-menu", [
   //   h("div", [h("h1", "Orbital"), h("h2", "Radial Matrix")]),
@@ -394,7 +394,7 @@ function init() {
 
   console.log(getNext());
   showMainMenu();
-  window.requestAnimationFrame(step);
+  step();
 }
 
 export default init;
