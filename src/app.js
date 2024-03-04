@@ -190,17 +190,17 @@ let shock = 0;
 let shockDecay = 0.1;
 
 function processEvent(event) {
-  const { eventType, data } = event;
+  const [eventType, data] = event;
   // console.log(event);
-  if (event[0] === 'input') {
-    if (event[1] === 'enter') {
+  if (eventType === 'input') {
+    if (data === 'enter' || data === 'newGame') {
       if (mainMenu) {
         newGame();
         return;
       }
     }
     if (piece && !mainMenu) {
-      switch (event[1]) {
+      switch (data) {
         case 'left':
           if (doesCollide({ ...piece, x: wrapX(piece.x + 1) }, grid)) {
             // clunk
@@ -232,6 +232,7 @@ function processEvent(event) {
           // if (piece.angle < 0) piece.angle = 3;
           break;
         default:
+          input.handleInputEvent(data, events);
           break;
       }
     }
@@ -390,7 +391,9 @@ function init() {
   // modeSelector.init();
   input.init(document, events);
   // view.addEventListener('click', getClickHandler());
-  document.addEventListener('click', () => events.push(['input', 'enter']));
+  document.addEventListener('click', () => {
+    events.push(['input', 'newGame']);
+  });
 
   console.log(getNext());
   showMainMenu();

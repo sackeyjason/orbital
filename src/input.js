@@ -37,6 +37,8 @@ const TOUCH_DEADZONE = 50;
 
 // or virtual scrollwheel?
 
+let lastDown = 0;
+
 const input = {
   init: (el, events) => {
     // Keyboard input
@@ -61,6 +63,7 @@ const input = {
       swipey.x = event.clientX;
       swipey.y = event.clientY;
       swipey.down = true;
+      events.push(['input', 'pointerdown']);
     });
 
     el.addEventListener('pointermove', (event) => {
@@ -87,7 +90,16 @@ const input = {
     el.addEventListener('pointerup', (_event) => {
       console.log(swipey);
       swipey.down = false;
+      events.push(['input', 'pointerup']);
     });
+  },
+  handleInputEvent: (type, events) => {
+    if (type === 'pointerdown') {
+      lastDown = Date.now();
+    }
+    if (type === 'pointerup' && Date.now() - lastDown < 250) {
+      events.push(['input', 'rotateR']);
+    }
   },
 };
 
