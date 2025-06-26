@@ -251,7 +251,9 @@ let dotX = 0;
 const speed = 2 / 30 / 32;
 let fps;
 // Gravity
-let fallingSpeed = 0.0015;
+let fallingSpeed = 0.0025;
+let spawnCount = 0;
+let level = 0;
 
 function update(t) {
   while (events.length) {
@@ -337,6 +339,12 @@ function update(t) {
       round.addScore(pointsAwarded);
     } else if (!mainMenu) {
       piece = spawn();
+      spawnCount++;
+      if (spawnCount % 5 === 4) {
+        level++;
+        fallingSpeed = fallingSpeed + 0.0005;
+      }
+
       if (doesCollide(piece, grid)) {
         // GAME OVER
         // high score?
@@ -368,6 +376,13 @@ function showMainMenu(message, etc) {
 function render() {
   renderGrid(grid2);
   renderFps(ctx, fps);
+
+  // Render level
+  ctx.fillStyle = '#222';
+  ctx.fillRect(0, 32, 65, 32);
+  ctx.font = '14px Arial';
+  ctx.fillStyle = '#CCC';
+  ctx.fillText('LVL: ' + level, 10, 52);
 }
 
 let last = timestamp();
